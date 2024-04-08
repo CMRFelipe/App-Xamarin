@@ -17,7 +17,8 @@ app.use(cors({
 }));
 
 
-app.post('/sendEmail', upload.single('file'), (req, res) => {
+
+app.post('/sendEmail', upload.single('file'), async (req, res) => {
 
   const request = req.body;
 
@@ -31,21 +32,28 @@ app.post('/sendEmail', upload.single('file'), (req, res) => {
     }
   });
 
+  try {
+    await transport.sendMail({
+      from: 'felipe.silva@cmrcia.com.br',
+      to: request.destinatario,
+      subject: request.assunto,
+      text: request.mensagem,
+      attachments: [
+        {
+          filename: req.file.originalname,
+          content: req.file.buffer,
+        }
+      ]
+    });
+    res.send('File uploaded successfully');
 
-  transport.sendMail({
-    from: 'felipe.silva@cmrcia.com.br',
-    to: 'felipe.silva@cmrcia.com.br',
-    subject: request.assunto,
-    text: request.mensagem,
-    attachments: [
-      {
-        filename: req.file.originalname,
-        content: req.file.buffer, 
-      }
-    ]
-  });
+  } catch (error)
+  {
+    console.error('Erro ao enviar e-mail:', error);
+    
+    res.status(500).send('Erro ao enviar o e-mail.');
+  }
 
-  res.send('File uploaded successfully');
 });
 
 app.listen(3000, () => {
