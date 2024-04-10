@@ -113,7 +113,7 @@ export default {
         );
         formData.append("file", file);
 
-        await axios.post("http://10.10.2.151:3000/sendEmail", formData).then((response) => {
+        await axios.post("http://172.16.40.150:3000/sendEmail", formData).then((response) => {
 
           this.showMensagem("Sucesso");
           

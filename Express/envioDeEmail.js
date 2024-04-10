@@ -27,14 +27,14 @@ app.post('/sendEmail', upload.single('file'), async (req, res) => {
     port: '587',
     secure: false,
     auth: {
-      user: 'felipe.silva@cmrcia.com.br',
-      pass: 'Mimo2018'
+      user: 'suporte_ti@cmrcia.com.br',
+      pass: '#@t1suP2022@'
     }
   });
 
   try {
     await transport.sendMail({
-      from: 'felipe.silva@cmrcia.com.br',
+      from: 'suporte_ti@cmrcia.com.br',
       to: request.destinatario,
       subject: request.assunto,
       text: request.mensagem,
